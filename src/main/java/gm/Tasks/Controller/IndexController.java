@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,9 +36,24 @@ public class IndexController {
     }
 
     @RequestMapping(value="/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("taskForm") Task task) {
+    public String addTask(@ModelAttribute("taskForm") Task task) {
         logger.info("Added task: " + task);
         taskService.saveTask(task);
         return "redirect:/"; //redirects to path "/"
+    }
+
+    @RequestMapping(value="/edit", method=RequestMethod.GET)
+    public String showEdit(@RequestParam int taskId, ModelMap model) {
+        Task task = taskService.searchTaskById(taskId);
+        logger.info("Task to edit: " + task);
+        model.put("task", task);
+        return "edit";
+    }
+
+    @RequestMapping(value="/edit", method = RequestMethod.POST)
+    public String editTask(@ModelAttribute("taskForm") Task task) {
+        logger.info("Task to edit: " + task);
+        taskService.saveTask(task);
+        return "redirect:/";
     }
 }

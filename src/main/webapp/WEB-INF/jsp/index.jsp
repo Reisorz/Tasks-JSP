@@ -16,6 +16,7 @@
                     <th scope="col">Task</th>
                     <th scope="col">Responsible person</th>
                     <th scope="col">Status</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,14 @@
                         <td>${task.taskName}</td>
                         <td>${task.responsiblePerson}</td>
                         <td>${task.status}</td>
+                        <td class="text-center">
+                            <c:set var="urlEdit">
+                                <c:url value="${application.contextPath}/edit">
+                                    <c:param name="taskId" value ="${task.taskId}"/>
+                                </c:url>
+                            </c:set>
+                            <a href="${urlEdit}" class="btn btn-warning btn-sm me-3">Edit</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
