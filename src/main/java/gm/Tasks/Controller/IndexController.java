@@ -52,8 +52,16 @@ public class IndexController {
 
     @RequestMapping(value="/edit", method = RequestMethod.POST)
     public String editTask(@ModelAttribute("taskForm") Task task) {
-        logger.info("Task to edit: " + task);
+        logger.info("Task edited: " + task);
         taskService.saveTask(task);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value="/delete", method = RequestMethod.GET)
+    public String deleteTask(@RequestParam int taskId) {
+        Task task = taskService.searchTaskById(taskId);
+        logger.info("Deleted task: " + task);
+        taskService.deleteTask(task);
         return "redirect:/";
     }
 }
